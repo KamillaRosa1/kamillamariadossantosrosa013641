@@ -1,0 +1,23 @@
+services:
+  # Banco de Dados (PostgreSQL)
+  db:
+    image: postgres:15
+    container_name: postgres_db_projeto
+    environment:
+      POSTGRES_DB: db_artistas
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  # Armazenamento S3 (MinIO)
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio_s3_projeto
+    ports:
+      - "9000:9000"  # Porta da API
+      - "9001:9001"  # Porta da Interface Web
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: password123
+    command: server /data --console-address ":9001"
