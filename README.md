@@ -22,23 +22,23 @@ Este projeto consiste em uma API REST para gerenciamento de artistas e álbuns, 
 
 ### Requisitos Gerais
 
-* **a) Segurança (CORS)**
-* **b) JWT (5 min + Renovação)**
-* **c) POST, PUT, GET**
-* **d) Paginação de álbuns**
-* **e) Consultas Parametrizadas**
-* **f) Ordenação Alfabética**
-* **g) Upload de imagens**
-* **h) Armazenamento MinIO**
-* **i) Links pré-assinados**
-* **j) Versionar endpoints**
-* **k) Flyway Migrations**
-* **l) OpenAPI/Swagger**
+* **a) Segurança (CORS)**          [ ]
+* **b) JWT (5 min + Renovação)**   [Parcial]
+* **c) POST, PUT, GET**            [ ]
+* **d) Paginação de álbuns**       [ ]
+* **e) Consultas Parametrizadas**  [ ]
+* **f) Ordenação Alfabética**      [ ]
+* **g) Upload de imagens**         [ ]
+* **h) Armazenamento MinIO**       [Concluído]
+* **i) Links pré-assinados**       [ ]
+* **j) Versionar endpoints**       [Parcial]
+* **k) Flyway Migrations**         [Concluído]
+* **l) OpenAPI/Swagger**           [ ]
 
 ### Requisitos Sênior
 
-* **a) Health Checks**
-* **b) Testes Unitários**
-* **c) WebSocket**
-* **d) Rate Limit**
-* **e) Endpoint Regionais**
+* **a) Health Checks**             [Concluído]
+* **b) Testes Unitários**          [ ]
+* **c) WebSocket**                 [ ]
+* **d) Rate Limit**                [ ]
+* **e) Endpoint Regionais**        [ ]
