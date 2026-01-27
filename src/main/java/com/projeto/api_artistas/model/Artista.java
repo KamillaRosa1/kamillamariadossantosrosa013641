@@ -11,19 +11,18 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Artista {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String nome;
 
     @Column(nullable = false)
-    private String tipo;
+    private String tipo; 
 
     @ManyToMany(mappedBy = "artistas")
     private Set<Album> albuns = new HashSet<>();
-    
 }
