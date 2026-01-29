@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "artistas")
@@ -11,10 +12,12 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true) // Boa prática: Equals apenas no ID
 public class Artista {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false)
@@ -24,5 +27,6 @@ public class Artista {
     private String tipo; 
 
     @ManyToMany(mappedBy = "artistas")
+    @JsonIgnoreProperties("artistas") // CRUCIAL: Evita recursão infinita
     private Set<Album> albuns = new HashSet<>();
 }
