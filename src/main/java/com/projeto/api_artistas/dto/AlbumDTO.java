@@ -12,5 +12,5 @@ public class AlbumDTO {
     private Long id;
     private String titulo;
     private String imagemCapaUrl;
-    private Set<ArtistaDTO> artistas;
+    private Set<Long> artistas; 
 }
