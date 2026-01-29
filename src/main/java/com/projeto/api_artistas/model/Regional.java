@@ -18,7 +18,7 @@ public class Regional {
     private Long id;
 
     @Column(name = "id_externo", nullable = false)
-    @EqualsAndHashCode.Include // Usamos o ID externo para comparar se é a mesma regional
+    @EqualsAndHashCode.Include // ID externo é usado para comparar se é a mesma regional
     private Long idExterno;
 
     @Column(nullable = false)
