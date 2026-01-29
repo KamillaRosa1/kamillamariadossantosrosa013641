@@ -29,11 +29,12 @@ public class S3Config {
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(accessKey, secretKey)))
                 .region(Region.US_EAST_1)
-                .forcePathStyle(true) // Necessário para MinIO
+                // Necessário para MinIO
+                .forcePathStyle(true) 
                 .build();
     }
 
-    // Bean necessário para gerar links de 30 minutos.
+    // Bean necessária para gerar links de 30 minutos.
     @Bean
     public S3Presigner s3Presigner() {
         return S3Presigner.builder()
