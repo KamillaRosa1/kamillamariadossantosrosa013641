@@ -33,7 +33,7 @@ public class RegionalService {
         try {
             RegionalDTO[] response = restTemplate.getForObject(API_URL, RegionalDTO[].class);
             
-            // Ajuste Sênior: Se for null, tratamos como lista vazia para permitir a inativação dos locais
+            // Se for null, será tratado como lista vazia para permitir a inativação dos locais
             List<RegionalDTO> dadosExternos = (response != null) ? Arrays.asList(response) : Collections.emptyList();
 
             Set<Long> idsExternosAtivos = dadosExternos.stream()
@@ -47,7 +47,7 @@ public class RegionalService {
                     .filter(Regional::isAtivo)
                     .collect(Collectors.toMap(Regional::getIdExterno, r -> r, (r1, r2) -> r1));
 
-            // 1. Inativar ausentes (Requisito e.iii.2)
+            // 1. Inativar ausentes
             todasLocais.stream()
                     .filter(local -> local.isAtivo() && !idsExternosAtivos.contains(local.getIdExterno()))
                     .forEach(local -> {
@@ -55,7 +55,7 @@ public class RegionalService {
                         regionalRepository.save(local);
                     });
 
-            // 2. Novos ou Alterados (Requisito e.iii.1 e 3)
+            // 2. Novos ou Alterados
             for (RegionalDTO dto : dadosExternos) {
                 Regional existente = mapaAtivas.get(dto.getId());
 

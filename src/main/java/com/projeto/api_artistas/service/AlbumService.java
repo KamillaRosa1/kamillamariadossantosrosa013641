@@ -43,27 +43,24 @@ public class AlbumService {
         return albumRepository.findAll(pageable);
     }
 
-    /**
-     * Requisito 'g', 'h' e 'i': Upload de imagem e retorno de link pré-assinado.
-     */
+    // Upload de imagem e retorno de link pré-assinado.
     @Transactional
     public String uploadCapa(Long id, MultipartFile arquivo) throws IOException {
         Album album = albumRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Álbum não encontrado"));
 
-        // Utiliza o seu S3Service original
+        // Utiliza o S3Service original
         String fileName = s3Service.uploadFile(arquivo);
 
         album.setImagemCapaUrl(fileName);
         albumRepository.save(album);
 
-        // Retorna o link de 30 minutos conforme requisito 'i'
+        // Retorna o link de 30 minutos
         return s3Service.gerarLinkPreAssinado(fileName);
     }
 
-    /**
-     * Requisito 'c' e 'Sênior c': Salvar dados e notificar via WebSocket.
-     */
+    // Salvar dados e notificar via WebSocket.
+
     @Transactional
     public Album salvar(AlbumDTO dto) {
         Album album = (dto.getId() != null) 
