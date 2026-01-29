@@ -1,0 +1,6 @@
+CREATE TABLE regionais (
+    id BIGSERIAL PRIMARY KEY,
+    id_externo BIGINT NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE
+);
