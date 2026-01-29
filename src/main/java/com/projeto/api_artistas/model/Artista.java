@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true) // Boa prática: Equals apenas no ID
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Artista {
 
     @Id
@@ -27,6 +27,6 @@ public class Artista {
     private String tipo; 
 
     @ManyToMany(mappedBy = "artistas")
-    @JsonIgnoreProperties("artistas") // CRUCIAL: Evita recursão infinita
+    @JsonIgnoreProperties("artistas") // Evita recursão infinita
     private Set<Album> albuns = new HashSet<>();
 }
