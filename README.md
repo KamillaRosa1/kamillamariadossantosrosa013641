@@ -31,6 +31,8 @@ Este projeto consiste em uma API REST para gerenciamento de artistas e álbuns, 
 
   * Swagger / OpenAPI 3.0: Implementado via springdoc-openapi. A documentação interativa está disponível em /swagger-ui.html, permitindo a exploração dos schemas, autenticação via Bearer Token e execução de testes funcionais diretamente pelo navegador.
 
+* **Testes Unitários:** Os testes foram implementados utilizando **JUnit 5**, **Mockito** e o suporte de **Spring Boot Test**.
+
 * **Ambiente de Desenvolvimento:** Visual Studio Code (VS Code)
 
 ## Execução da Aplicação
@@ -78,10 +80,99 @@ Com os containers ativos, rode a aplicação:
 ./mvnw spring-boot:run
 ```
 
-### 5. Testes Unitários
+### 5. Testes com Swagger
 
-Os testes foram implementados utilizando **JUnit 5**, **Mockito** e o suporte de **Spring Boot Test**.
-Para executar os testes:
+Acesse a interface técnica para testar os endpoints:
+
+URL: <http://localhost:8080/swagger-ui/index.html>
+
+* **Autenticação:**
+  
+  * Localize o grupo de endpoints `/api/v1/auth/login`
+  * Clique em `POST` e em seguida em `Try it out`
+  * No corpo da requisição insira:
+
+```JSON
+{
+  "username": "admin",
+  "password": "password123"
+}
+```
+
+  * Clique em `Execute`. Na resposta `Server response`, copie o valor do campo token (sem as aspas).
+  * Clique em `Authorize` no topo da página, cole o token e confirme.
+
+* **Upload da Capa**
+  
+  * Localize o endpoint `/api/v1/albuns/{id}/capa`, clique em `POST` e depois em `Try it out`.
+  * No campo id, insira o ID de um álbum já cadastrado no banco.
+  * No campo `file`, clique em Escolher arquivo e selecione a imagem (ex: harakiri.jpg)
+  * Clique em `Execute`.
+  * A resposta será um link, copie este link integralmente.
+
+* **Persistência da Imagem e alteração cadastral - PUT:** Utilize o link obtido no passo anterior para preencher o campo `imagemCapaUrl` no PUT de Artistas ou Álbuns para salvar. Após salvar o registro com o link, ao realizar um GET, o campo passará a exibir apenas o nome definitivo do objeto armazenado no MinIO (ex: 12345_harakiri.jpg)
+  
+  * /api/v1/artistas/{id}: 
+  ```JSON
+  {
+    "id": 0,
+    "nome": "string",
+    "tipo": "string",
+    "albuns": [
+      {
+        "id": 0,
+        "titulo": "string",
+        "imagemCapaUrl": "LINK"
+      }
+    ]
+  }
+  ```
+
+  * /api/v1/albuns/{id}:
+  ```JSON
+  {
+    "id": 0,
+    "titulo": "string",
+    "imagemCapaUrl": "LINK",
+    "artistas": [
+            0
+    ]
+  }
+  ```
+
+* **Consultas e Paginação - GET:** Para os endpoints de listagem, os parâmetros de paginação e ordenação seguem a estrutura abaixo:
+  * Para /api/v1/artistas:
+
+    ```JSON
+    {
+      "page": 0,
+      "size": 15,
+      "sort": [
+        "nome,desc"
+      ]
+    }
+    ```
+
+  * Para /api/v1/albuns:
+    ```JSON
+    {
+      "page": 0,
+      "size": 15,
+      "sort": [
+        "titulo,desc"
+      ]
+    }
+    ```
+
+  Observação: para pesquisa ascendente é só trocar o `desc` pelo `asc` no JSON.
+
+* **Método sem parâmetro:**
+
+  * /api/v1/regionais: Retorna a listagem de regiões disponíveis.
+
+### 6. Testes Unitários
+
+Execute os testes com:
 
 ```bash
 ./mvnw test "-Dspring.profiles.active=test"
